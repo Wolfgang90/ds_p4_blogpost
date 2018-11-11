@@ -11845,20 +11845,29 @@ C:\Users\WGER\AppData\Local\Continuum\anaconda3\lib\site-packages\sklearn\grid_s
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The subsequent code cell defines in which manner variables in the dataset will be treated. The inline comments reason why a certain approach is taken</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Define relevant variables based on qualitative analysis of the dataset</span>
+<span class="sd">    Preprocessing for analyis</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="c1"># Global definitions</span>
-<span class="n">columns_excluded</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span>
+<span class="c1"># Columns to be excluded from the analysis with reason for non-inclusion as a comment</span>
+<span class="n">columns_excluded</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="c1"># not required</span>
                     <span class="s1">&#39;listing_url&#39;</span><span class="p">,</span> <span class="c1"># url</span>
-                    <span class="s1">&#39;scrape_id&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;last_scraped&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;scrape_id&#39;</span><span class="p">,</span> <span class="c1"># not required</span>
+                    <span class="s1">&#39;last_scraped&#39;</span><span class="p">,</span> <span class="c1"># not required</span>
                     <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="c1"># unencodeable string</span>
                     <span class="s1">&#39;summary&#39;</span><span class="p">,</span> <span class="c1"># unencodeable string</span>
                     <span class="s1">&#39;space&#39;</span><span class="p">,</span><span class="c1"># unencodeable string</span>
@@ -11906,6 +11915,7 @@ C:\Users\WGER\AppData\Local\Continuum\anaconda3\lib\site-packages\sklearn\grid_s
                     <span class="s1">&#39;square_feet&#39;</span> <span class="c1"># very seldomly filled</span>
                    <span class="p">]</span>
 
+<span class="c1"># Columns to be one-hot encoded as they are of categorial nature</span>
 <span class="n">columns_one_hot_encode</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;host_response_time&#39;</span><span class="p">,</span>
                           <span class="s1">&#39;property_type&#39;</span><span class="p">,</span>                          
                           <span class="s1">&#39;room_type&#39;</span><span class="p">,</span>
@@ -11913,6 +11923,7 @@ C:\Users\WGER\AppData\Local\Continuum\anaconda3\lib\site-packages\sklearn\grid_s
                           <span class="s1">&#39;cancellation_policy&#39;</span>
                          <span class="p">]</span>
 
+<span class="c1"># columns which have boolean values as &#39;f&#39; and &#39;t&#39;. They need to be replaced by 0 and 1</span>
 <span class="n">columns_true_false</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;host_is_superhost&#39;</span><span class="p">,</span>
                       <span class="s1">&#39;host_has_profile_pic&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;host_identity_verified&#39;</span><span class="p">,</span>
@@ -11924,15 +11935,19 @@ C:\Users\WGER\AppData\Local\Continuum\anaconda3\lib\site-packages\sklearn\grid_s
                         <span class="s1">&#39;require_guest_phone_verification&#39;</span>
                      <span class="p">]</span>
 
+<span class="c1"># columns containing a $ sign. They need to be converted to a float value</span>
 <span class="n">columns_dollar_parser</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> 
                            <span class="s1">&#39;security_deposit&#39;</span><span class="p">,</span> 
                            <span class="s1">&#39;cleaning_fee&#39;</span><span class="p">,</span> 
                            <span class="s1">&#39;extra_people&#39;</span><span class="p">]</span>
 
+<span class="c1"># columns containing a % sign. They need to be converted to a float value</span>
 <span class="n">column_percentage_parse</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;host_response_rate&#39;</span><span class="p">,]</span>
 
+<span class="c1"># columns containing a date. They need to be converted to a float for machine learning analysis</span>
 <span class="n">column_date_parse</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;host_since&#39;</span><span class="p">,</span><span class="s1">&#39;first_review&#39;</span><span class="p">,</span><span class="s1">&#39;last_review&#39;</span><span class="p">]</span>
 
+<span class="c1"># translation of the neighbourhood column for better readability</span>
 <span class="n">column_neighbourhood_translations</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;朝阳区 / Chaoyang&#39;</span><span class="p">:</span> <span class="s1">&#39;Chaoyang&#39;</span><span class="p">,</span>
     <span class="s1">&#39;东城区&#39;</span><span class="p">:</span> <span class="s1">&#39;Dongcheng&#39;</span><span class="p">,</span>
@@ -11952,6 +11967,7 @@ C:\Users\WGER\AppData\Local\Continuum\anaconda3\lib\site-packages\sklearn\grid_s
     <span class="s1">&#39;门头沟区 / Mentougou&#39;</span><span class="p">:</span><span class="s1">&#39;Mentougou&#39;</span>
 <span class="p">}</span>
 
+<span class="c1"># Neighbourhoodencoding for machine learning</span>
 <span class="n">column_neighbourhood_encoding</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;Chaoyang&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="s1">&#39;Dongcheng&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>
@@ -11971,21 +11987,26 @@ C:\Users\WGER\AppData\Local\Continuum\anaconda3\lib\site-packages\sklearn\grid_s
     <span class="s1">&#39;Mentougou&#39;</span><span class="p">:</span><span class="mi">16</span>
 <span class="p">}</span>
 
+<span class="c1"># Reverse neighbourhoodencoding for machine learning</span>
 <span class="n">column_neighbourhood_encoding_reverse</span> <span class="o">=</span> <span class="p">{</span><span class="n">y</span><span class="p">:</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">column_neighbourhood_encoding</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
 
 
 
-<span class="c1"># Define rows to drop in case of empty values (max 20 missing values)</span>
-<span class="n">missing_values_drop</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;host_since&#39;</span><span class="p">,</span> 
-                <span class="s1">&#39;host_listings_count&#39;</span><span class="p">,</span> 
-                <span class="s1">&#39;beds&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;first_review&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;last_review&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;neighbourhood_cleansed&#39;</span> <span class="c1"># More than 20. But only if neighbourhood available this feature is relevant</span>
+<span class="c1"># Define columns for which in case of empty values the row will be dropped</span>
+<span class="n">missing_values_drop</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;host_since&#39;</span><span class="p">,</span> <span class="c1"># overall less than 20 values</span>
+                <span class="s1">&#39;host_listings_count&#39;</span><span class="p">,</span> <span class="c1"># overall less than 20 values</span>
+                <span class="s1">&#39;beds&#39;</span><span class="p">,</span> <span class="c1"># overall less than 20 values</span>
+                <span class="s1">&#39;first_review&#39;</span><span class="p">,</span> <span class="c1"># overall less than 20 values</span>
+                <span class="s1">&#39;last_review&#39;</span><span class="p">,</span> <span class="c1"># overall less than 20 values</span>
+                <span class="s1">&#39;neighbourhood_cleansed&#39;</span> <span class="c1"># Required as this variable is the target variable</span>
                <span class="p">]</span>
 
 
-<span class="c1"># Machine Learning pipeline</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Preprocessing for analyis</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># Missing values to be replaced by 0. The columns listed from my perspective make sense to be set to 0. If for instance</span>
+<span class="c1"># no security deposit is provided by the host, there is probably no security deposit and it can consequently be set to 0</span>
 <span class="n">missing_values_replace_0</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;security_deposit&#39;</span><span class="p">,</span> 
                             <span class="s1">&#39;host_has_profile_pic&#39;</span><span class="p">,</span>
                             <span class="s1">&#39;host_identity_verified&#39;</span><span class="p">,</span>
@@ -11993,6 +12014,8 @@ C:\Users\WGER\AppData\Local\Continuum\anaconda3\lib\site-packages\sklearn\grid_s
                             <span class="s1">&#39;cleaning_fee&#39;</span><span class="p">,</span>
                            <span class="s1">&#39;reviews_per_month&#39;</span><span class="p">]</span>
 
+<span class="c1"># Missing values to be imputed by the median. For all columns with more than 20 values missing and no assumption for</span>
+<span class="c1"># &#39;missing_values_replace_0&#39; I decided to impute to the mean in order not to loose information by the loss of observation objects</span>
 <span class="n">missing_values_impute</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;host_response_rate&#39;</span><span class="p">,</span>
                               <span class="s1">&#39;review_scores_rating&#39;</span><span class="p">,</span>
                               <span class="s1">&#39;review_scores_accuracy&#39;</span><span class="p">,</span>

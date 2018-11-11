@@ -1,4 +1,6 @@
-# ds_p4_blogpost
+# How to start with AirBnb in Beijing
+
+This repository corresponds to my medium article `How to start with AirBnb in Beijing` which can be found [here](https://medium.com/@eichler_wolfgang/how-to-start-with-airbnb-in-beijing-2568561c4658).
 
 ## project dependencies
 * Anaconda 5.3
@@ -12,7 +14,7 @@ The analysis is based on the public AirBnb dataset for Beijing from [insideairbn
 * Analysis.ipynb: .ipynb file containing the analysis
 * Analysis.html: .html version of the .ipynb analyis file
 
-## Key analysis results
+## key analysis results
 1. Beijing consists of 16 AirBnb areas with varying flat numbers
 2. Main features of the AirBnb dataset connected to the area are for instance
     * price per night
